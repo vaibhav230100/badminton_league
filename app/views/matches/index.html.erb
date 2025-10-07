@@ -1,0 +1,25 @@
+<div class="d-flex justify-content-between mb-4">
+  <h4>Match History</h4>
+  <%= link_to "Record Match", new_match_path, class: "btn btn-primary" %>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Player One</th>
+      <th>Player Two</th>
+      <th>Winner</th>
+      <th>Played On</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @matches.each do |match| %>
+      <tr>
+        <td><%= match.player_one&.name || "Deleted Player" %></td>
+        <td><%= match.player_two&.name || "Deleted Player" %></td>
+        <td><%= match.winner&.name || "Deleted Player" %></td>
+        <td><%= match.created_at.strftime("%b %d, %Y") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

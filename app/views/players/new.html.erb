@@ -1,0 +1,18 @@
+<h4>Add Player</h4>
+<% if @player.errors.any? %>
+  <div class="alert alert-danger">
+    <h6><%= pluralize(@player.errors.count, "error") %> prevented this player from being saved:</h6>
+    <ul class="mb-0">
+      <% @player.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_with model: @player, local: true do |f| %>
+  <div class="mb-3">
+    <%= f.label :name, "Player Name" %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  <%= f.submit "Save Player", class: "btn btn-success" %>
+<% end %>
