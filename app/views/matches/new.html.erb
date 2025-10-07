@@ -1,0 +1,29 @@
+<h4>Record New Match</h4>
+<% if @match.errors.any? %>
+  <div class="alert alert-danger">
+    <h6><%= pluralize(@match.errors.count, "error") %> prevented this match from being saved:</h6>
+    <ul class="mb-0">
+      <% @match.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_with model: @match, local: true do |f| %>
+  <div class="row mb-3">
+    <div class="col-md-4">
+      <%= f.label :player_one_id, "Player One" %>
+      <%= f.collection_select :player_one_id, @all_players, :id, :name, { prompt: "Select Player One" }, class: "form-select" %>
+    </div>
+    <div class="col-md-4">
+      <%= f.label :player_two_id, "Player Two" %>
+      <%= f.collection_select :player_two_id, @all_players, :id, :name, { prompt: "Select Player Two" }, class: "form-select" %>
+    </div>
+    <div class="col-md-4">
+      <%= f.label :winner_id, "Winner" %>
+      <%= f.collection_select :winner_id, @all_players, :id, :name, { prompt: "Select Winner" }, class: "form-select" %>
+    </div>
+  </div>
+
+  <%= f.submit "Save Result", class: "btn btn-success" %>
+<% end %>
