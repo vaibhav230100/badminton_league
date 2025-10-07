@@ -1,0 +1,29 @@
+<div class="d-flex justify-content-between mb-3">
+  <h4>Player List</h4>
+  <%= link_to "Add New Player", new_player_path, class: "btn btn-primary" %>
+</div>
+
+<table class="table align-middle">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Wins</th>
+      <th>Losses</th>
+      <th>Total Games</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @players.each do |player| %>
+      <tr>
+        <td><%= player.name %></td>
+        <td><%= player.wins %></td>
+        <td><%= player.losses %></td>
+        <td><%= player.total_games %></td>
+        <td>
+          <%= link_to "Remove", player_path(player),data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },class: "btn btn-sm btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
