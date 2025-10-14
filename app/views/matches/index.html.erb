@@ -19,6 +19,9 @@
         <td><%= match.player_two&.name || "Deleted Player" %></td>
         <td><%= match.winner&.name || "Deleted Player" %></td>
         <td><%= match.created_at.strftime("%b %d, %Y") %></td>
+        <td>
+          <%= link_to "Remove", match_path(match),data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },class: "btn btn-sm btn-danger" %>
+        </td>        
       </tr>
     <% end %>
   </tbody>
