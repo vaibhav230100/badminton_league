@@ -11,7 +11,7 @@ class MatchesController < ApplicationController
   def create
     @match = Match.new(match_params)
     if @match.save
-      redirect_to matches_path, notice: 'Match result recorded.'
+      redirect_to matches_path, notice: "Match result recorded."
     else
       @all_players = Player.all
       render :new
