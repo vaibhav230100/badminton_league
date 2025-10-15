@@ -21,6 +21,8 @@ class MatchesController < ApplicationController
   end
 
   def destroy
+    # DecrementPlayerRecordsService is used for match delete.
+    # It also decreases the winner’s win count and the loser’s loss count.
     result = Matches::DecrementPlayerRecordsService.new(@match).call
     redirect_to matches_path, notice: result.message
   end
