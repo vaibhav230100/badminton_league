@@ -1,5 +1,5 @@
 class MatchesController < ApplicationController
-  before_action :find_match, only: [:destroy]
+  before_action :find_match, only: [ :destroy ]
   def index
     @matches = Match.includes(:player_one, :player_two, :winner).order(created_at: :desc)
   end
