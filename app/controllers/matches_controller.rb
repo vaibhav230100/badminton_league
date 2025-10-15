@@ -1,5 +1,5 @@
 class MatchesController < ApplicationController
-  before_action :find_match, only: [ :destroy ]
+  before_action :find_match, only: [:destroy]
   def index
     @matches = Match.includes(:player_one, :player_two, :winner).order(created_at: :desc)
   end
@@ -10,18 +10,19 @@ class MatchesController < ApplicationController
   end
 
   def create
-    @match = Match.new(match_params)
-    if @match.save
-      redirect_to matches_path, notice: "Match result recorded."
+    result = Matches::CreateMatchService.new(match_params).call
+    if result.success?
+      redirect_to matches_path, notice: result.message
     else
+      @match = result.record
       @all_players = Player.all
       render :new
     end
   end
 
   def destroy
-    @match.destroy
-    redirect_to match_path, notice: "Match was removed."
+    result = Matches::DecrementPlayerRecordsService.new(@match).call
+    redirect_to matches_path, notice: result.message
   end
 
   private
