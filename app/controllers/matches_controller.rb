@@ -10,18 +10,21 @@ class MatchesController < ApplicationController
   end
 
   def create
-    @match = Match.new(match_params)
-    if @match.save
-      redirect_to matches_path, notice: "Match result recorded."
+    result = Matches::CreateMatchService.new(match_params).call
+    if result.success?
+      redirect_to matches_path, notice: result.message
     else
+      @match = result.record
       @all_players = Player.all
       render :new
     end
   end
 
   def destroy
-    @match.destroy
-    redirect_to match_path, notice: "Match was removed."
+    # DecrementPlayerRecordsService is used for match delete.
+    # It also decreases the winner’s win count and the loser’s loss count.
+    result = Matches::DecrementPlayerRecordsService.new(@match).call
+    redirect_to matches_path, notice: result.message
   end
 
   private
